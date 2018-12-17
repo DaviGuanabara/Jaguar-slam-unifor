@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- turtlebot_teleop_key already has its own built in velocity smoother -->
+  <node pkg="turtlebot_teleop" type="turtlebot_teleop_key" name="turtlebot_teleop_keyboard"  output="screen">
+    <param name="scale_linear" value="0.5" type="double"/>
+    <param name="scale_angular" value="1.5" type="double"/>
+    <remap from="turtlebot_teleop_keyboard/cmd_vel" to="cmd_vel"/>
+  </node>
+</launch>
+
+<!--/home/davi/Desktop/jaguar_ws/src/drrobotV2_player/src/drrobot_keyboard_teleop.cpp -->
+ 
+
+
+<!--node name="jaguar_teleop" pkg="drrobot_jaguarV2_player" type="drrobot_jaguarv2_joy_teleop_node" >
+    <remap from="drrobot_cmd_vel" to="cmd_vel"/-->
+  </node>
+
+</launch>
