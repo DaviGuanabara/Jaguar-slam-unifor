@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+
+<launch>
+	<param name="use_sim_time" value="false"/>
+
+  <include file="$(find hector_slam_example)/launch/default_mapping.launch"/>
+
+  <param name="use_sim_time" type="bool" value="false"/>
+
+  <param name="tf_map_scanmatch_transform_frame_name" value="scanmatch_frame"/>
+
+  <param name="map_frame" value="map"/> 
+  <param name="base_frame" value="base_fame"/> 
+  <param name="odom_frame" value="base_fame"/>
+  
+
+<!-- TF use  -->
+
+  <param name="pub_map_scanmatch_transform" value="true"/>
+  <param name="pub_map_odom_transform" value="true"/> 
+
+  <!--node pkg="tf" type="static_transform_publisher" name="map_2_odom" 
+    args="0.0 0.0 0.0 0.0 0.0 0.0 /map /odom 100" /-->
+
+
+  <node pkg="tf" type="static_transform_publisher" name="odom_2_base_frame" 
+    args="0.0 0.0 0.0 0.0 0.0 0.0 /odom /base_frame 100" />
+
+  <node pkg="tf" type="static_transform_publisher" name="base_frame_2_hokuyo" 
+    args="0.0 0.0 0.0 0.0 0.0 0.0 /base_frame /laser 100" />
+
+  <!--node pkg="tf" type="static_transform_publisher" name="scanmatch_2_hokuyo" 
+    args="0.0 0.0 0.0 0.0 0.0 0.0 /scanmatch_frame /laser 100" /-->
+
+
+
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find hector_slam_example)/launch/rviz_cfg.rviz"/>
+
+ <!-- Move base -->
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find mybot_navigation)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find mybot_navigation)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find mybot_navigation)/config/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find mybot_navigation)/config/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find mybot_navigation)/config/base_local_planner_params.yaml" command="load" />
+    
+    <remap from="cmd_vel" to="cmd_vel"/>
+    <remap from="odom" to="/odom"/>
+    <remap from="scan" to="/scan"/>
+    <param name="move_base/DWAPlannerROS/yaw_goal_tolerance" value="1.0"/>
+    <param name="move_base/DWAPlannerROS/xy_goal_tolerance" value="1.0"/>
+
+  </node> 
+
+</launch>
