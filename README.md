@@ -48,3 +48,9 @@ rosrun drrobot_jaguarV2_player drrobot_jaguarv2_player_node
 
 Finally, replay cmd_vel to drrobot_cmd_vel to control jaguar
 rosrun topic_tools relay cmd_vel drrobot_cmd_vel
+
+This project was based on:
+  http://moorerobots.com/blog/post/3
+  https://github.com/DaikiMaekawa/hector_slam_example
+  
+  
